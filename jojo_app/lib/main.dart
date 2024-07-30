@@ -17,14 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    JoJoService jojoService = JoJoService();
-
-    jojoService.getAllStands().then((stands) {
-      stands.forEach((stand) {
-        print(stand.name);
-      });
-    });
-
     return MaterialApp(
       title: 'BizarreApp',
       debugShowCheckedModeBanner: false,

@@ -1,0 +1,1 @@
+// Página com detalhes de Personagens/Stands

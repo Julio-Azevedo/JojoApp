@@ -1,0 +1,1 @@
+// widget com detalhes do stand

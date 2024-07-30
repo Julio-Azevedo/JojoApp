@@ -1,0 +1,1 @@
+// Página com a Lista de Personagens/Stands e Filtro
