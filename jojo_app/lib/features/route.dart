@@ -29,6 +29,7 @@ class JojoRoute extends StatelessWidget {
                 arguments: (settings.arguments as DetailArguments));
           });
         }
+        return null;
       },
     );
   }
