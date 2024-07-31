@@ -1,19 +1,18 @@
 // packages
-//import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 // models
-import 'package:jojo_app/common/models/personagem.dart';
+import 'package:jojo_app/pages/list_page.dart';
 // pages
-//import 'package:jojo_app/common/repository/jojo_repository.dart';
-//import 'package:jojo_app/features/route.dart';
 import 'package:jojo_app/services/jojo_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final service = JoJoService();
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Scaffold(
-        body: Column(
-          children: [
-            Text('Hello, world!'),
-          ],
-        ),
-      ),
-      //JojoRoute(repository: JojoRepository(dio: Dio()))
-
+      home: ListPage(jojoService: service),
+      //JojoRoute(repository: JojoRepository(dio: Dio())),
       /*HomeContainer(
         repository: JojoRepository(dio: Dio()),
         ),*/

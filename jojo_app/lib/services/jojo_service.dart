@@ -59,11 +59,35 @@ class JoJoService {
       List<dynamic> jsonList = jsonDecode(response.body);
       List<Stand> stands =
           jsonList.map((json) => Stand.fromJson(json)).toList();
-      print(stands);
 
       return stands;
     } else {
       throw Exception('Failed to get List of Stand data');
+    }
+  }
+
+  Future<List<Stand>> getStandByQuery(Map<String, dynamic> query) async {
+    var uri = Uri(
+      scheme: 'https',
+      host: 'stand-by-me.herokuapp.com',
+      path: 'api/v1/stands/query/query',
+      queryParameters: query,
+    );
+
+    var response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      try {
+        List<Stand> stands =
+            jsonList.map((json) => Stand.fromJson(json)).toList();
+
+        return stands;
+      } catch (e) {
+        throw Exception('Failed to parse Stand data: $e');
+      }
+    } else {
+      throw Exception('Failed to get Stand data');
     }
   }
 }

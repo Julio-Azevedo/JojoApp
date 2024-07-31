@@ -1,4 +1,5 @@
 class ApiConst {
+  static const BASE_URL = "https://stand-by-me.herokuapp.com";
   static const CHARACTER_URL =
       "https://stand-by-me.herokuapp.com/api/v1/characters";
   static const STAND_URL = "https://stand-by-me.herokuapp.com/api/v1/stands";
@@ -13,7 +14,7 @@ class ApiConst {
     return STAND_URL;
   }
 
-  String tranformInQuery(String URL) {
-    return "$URL/query/query?";
+  get getBaseUrl {
+    return BASE_URL;
   }
 }
