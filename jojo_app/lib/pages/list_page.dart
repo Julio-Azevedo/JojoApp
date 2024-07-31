@@ -6,6 +6,7 @@ import 'package:jojo_app/components/card_widget.dart';
 
 // models
 import 'package:jojo_app/models/personagem.dart';
+import 'package:jojo_app/pages/details_page.dart';
 
 //services
 import 'package:jojo_app/services/jojo_service.dart';
@@ -58,8 +59,21 @@ class _ListPageState extends State<ListPage> {
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 3),
-          child:
-              ClickableCard(nameTitle: name, chapters: chapters, imgUrl: img),
+          child: ClickableCard(
+            nameTitle: name,
+            chapters: chapters,
+            imgUrl: img,
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DetailsPage(
+                    personagem: _personagens?[index],
+                    jojoService: widget.jojoService,
+                  ),
+                ),
+              );
+            },
+          ),
         );
       },
     );

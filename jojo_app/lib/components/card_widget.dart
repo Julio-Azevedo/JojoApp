@@ -4,12 +4,14 @@ class ClickableCard extends StatelessWidget {
   final String nameTitle;
   final List<String> chapters;
   final String imgUrl;
+  final VoidCallback onTap;
 
   const ClickableCard({
     super.key,
     required this.nameTitle,
     required this.chapters,
     required this.imgUrl,
+    required this.onTap,
   });
 
   // Para adicionar a capa no Card
@@ -47,7 +49,7 @@ class ClickableCard extends StatelessWidget {
           ),
           child: InkWell(
             splashColor: Colors.blue,
-            onTap: () {},
+            onTap: onTap,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
