@@ -36,6 +36,32 @@ class JoJoService {
     }
   }
 
+  Future<List<Personagem>> getPersonagemByQuery(
+      Map<String, dynamic> query) async {
+    var uri = Uri(
+      scheme: 'https',
+      host: 'stand-by-me.herokuapp.com',
+      path: 'api/v1/characters/query/query',
+      queryParameters: query,
+    );
+
+    var response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      try {
+        List<Personagem> personagens =
+            jsonList.map((json) => Personagem.fromJson(json)).toList();
+
+        return personagens;
+      } catch (e) {
+        throw Exception('Failed to parse Personagem data: $e');
+      }
+    } else {
+      throw Exception('Failed to get Personagem data');
+    }
+  }
+
   Future<Stand> getStand(int id) async {
     String url = '${apiUrl.getStandUrl}/$id';
     final response = await http.get(Uri.parse(url));

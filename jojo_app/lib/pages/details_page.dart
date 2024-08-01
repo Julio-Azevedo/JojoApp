@@ -4,13 +4,12 @@ import 'package:jojo_app/models/personagem.dart';
 import 'package:jojo_app/models/stand.dart';
 import 'package:jojo_app/services/jojo_service.dart';
 
-// ignore: must_be_immutable
 class DetailsPage extends StatefulWidget {
   final JoJoService jojoService;
-  Personagem? personagem;
-  Stand? stand;
+  final Personagem? personagem;
+  final Stand? stand;
 
-  DetailsPage({
+  const DetailsPage({
     super.key,
     this.personagem,
     this.stand,
@@ -118,7 +117,12 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : CharacterWidget(_selectedIndex),
+          : CharacterWidget(
+              _selectedIndex,
+              personagem: _personagem,
+              stand: _stand,
+              jojoService: widget.jojoService,
+            ),
       bottomNavigationBar: _isLoading
           ? null
           : bottomImpossible
