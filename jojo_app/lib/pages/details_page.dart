@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jojo_app/components/character_widget.dart';
 import 'package:jojo_app/models/personagem.dart';
 import 'package:jojo_app/models/stand.dart';
 import 'package:jojo_app/services/jojo_service.dart';
@@ -24,6 +25,9 @@ class _DetailsPageState extends State<DetailsPage> {
   Stand? _stand;
   Personagem? _personagem;
 
+  int _selectedIndex = 0;
+  bool _isLoading = true;
+
   @override
   initState() {
     super.initState();
@@ -31,6 +35,9 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   void _loadData() async {
+    // Inicia em Personagem
+    int new_index = 0;
+
     Personagem? fetchedPersonagem;
     if (widget.personagem != null) {
       fetchedPersonagem = widget.personagem;
@@ -40,6 +47,8 @@ class _DetailsPageState extends State<DetailsPage> {
 
     Stand? fetchedStand;
     if (widget.stand != null) {
+      // Se altera em Stand
+      new_index = 1;
       fetchedStand = widget.stand;
     } else {
       fetchedStand = await _findStand();
@@ -48,6 +57,8 @@ class _DetailsPageState extends State<DetailsPage> {
     setState(() {
       _stand = fetchedStand;
       _personagem = fetchedPersonagem;
+      _selectedIndex = new_index;
+      _isLoading = false;
     });
   }
 
@@ -68,13 +79,56 @@ class _DetailsPageState extends State<DetailsPage> {
     return userVerify;
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool bottomImpossible = false;
+    List<BottomNavigationBarItem> bottomNavItems = [];
+
+    if (_personagem != null) {
+      bottomNavItems.add(
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.fingerprint),
+          label: "Personagem",
+        ),
+      );
+    } else {
+      bottomImpossible = true;
+    }
+
+    if (_stand != null) {
+      bottomNavItems.add(
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.psychology),
+          label: "Stand",
+        ),
+      );
+    } else {
+      bottomImpossible = true;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Personagens'),
       ),
-      body: Text('User: ${_personagem?.name}, Stand: ${_stand?.name}'),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : CharacterWidget(_selectedIndex),
+      bottomNavigationBar: _isLoading
+          ? null
+          : bottomImpossible
+              ? null
+              : BottomNavigationBar(
+                  selectedItemColor: Colors.blue[600],
+                  currentIndex: _selectedIndex,
+                  onTap: _onItemTapped,
+                  items: bottomNavItems,
+                ),
     );
   }
 }
