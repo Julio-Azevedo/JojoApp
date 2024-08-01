@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jojo_app/components/personagem_widget.dart';
+import 'package:jojo_app/components/stand_widget.dart';
 import 'package:jojo_app/models/personagem.dart';
 import 'package:jojo_app/models/stand.dart';
 import 'package:jojo_app/services/jojo_service.dart';
@@ -14,8 +15,6 @@ class CharacterWidget extends StatelessWidget {
       {super.key, this.personagem, this.stand, required this.jojoService});
 
   Image _selectImage() {
-    print(
-        'index: $index, personagem: ${personagem?.image}, stand: ${stand?.image}');
     if (index == 0 && personagem != null) {
       return Image.network(
           'https://jojos-bizarre-api.netlify.app/assets/${personagem!.image}');
@@ -53,12 +52,15 @@ class CharacterWidget extends StatelessWidget {
               ),
             ),
             child: Center(
-                child: index == 0
-                    ? PersonagemWidget(
-                        personagem: personagem!,
-                        jojoService: jojoService,
-                      )
-                    : Text("Stands")),
+              child: index == 0
+                  ? PersonagemWidget(
+                      personagem!,
+                      jojoService: jojoService,
+                    )
+                  : StandWidget(
+                      stand!,
+                    ),
+            ),
           ),
         ),
       ],

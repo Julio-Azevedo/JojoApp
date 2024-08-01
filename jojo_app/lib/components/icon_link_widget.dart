@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jojo_app/models/personagem.dart';
+import 'package:jojo_app/pages/details_page.dart';
 import 'package:jojo_app/services/jojo_service.dart';
 
 class IconLink extends StatefulWidget {
@@ -37,16 +38,28 @@ class _IconLinkState extends State<IconLink> {
     }
   }
 
+  _goToFamilyMember() {
+    if (_personagem != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => DetailsPage(
+            personagem: _personagem,
+            jojoService: widget.jojoService,
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: _goToFamilyMember,
           icon: ImageIcon(_imgIcon),
           iconSize: 60,
-          hoverColor: Colors.amber,
         ),
         Text(
           widget.familyMember,
