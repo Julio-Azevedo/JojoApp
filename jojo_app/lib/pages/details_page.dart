@@ -35,7 +35,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   void _loadData() async {
     // Inicia em Personagem
-    int new_index = 0;
+    int newIndex = 0;
 
     Personagem? fetchedPersonagem;
     if (widget.personagem != null) {
@@ -47,7 +47,7 @@ class _DetailsPageState extends State<DetailsPage> {
     Stand? fetchedStand;
     if (widget.stand != null) {
       // Se altera em Stand
-      new_index = 1;
+      newIndex = 1;
       fetchedStand = widget.stand;
     } else {
       fetchedStand = await _findStand();
@@ -56,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
     setState(() {
       _stand = fetchedStand;
       _personagem = fetchedPersonagem;
-      _selectedIndex = new_index;
+      _selectedIndex = newIndex;
       _isLoading = false;
     });
   }

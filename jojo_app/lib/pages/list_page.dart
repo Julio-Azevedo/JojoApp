@@ -3,6 +3,7 @@
 // packages
 import 'package:flutter/material.dart';
 import 'package:jojo_app/components/card_widget.dart';
+import 'package:jojo_app/components/my_appbar.dart';
 
 // models
 import 'package:jojo_app/models/personagem.dart';
@@ -32,7 +33,7 @@ class _ListPageState extends State<ListPage> {
     _fetchObjects();
   }
 
-  _fetchObjects() async {
+  void _fetchObjects() async {
     // atualizar personagens e stands
     try {
       // criando lista de personagens
@@ -46,36 +47,50 @@ class _ListPageState extends State<ListPage> {
     }
   }
 
+  void _changeObjects(Map<String, dynamic> query) async {
+    List<Personagem> personagens =
+        await widget.jojoService.getPersonagemByQuery(query);
+
+    setState(() {
+      _personagens = personagens;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      itemCount: _personagens?.length ?? 0,
-      itemBuilder: (context, index) {
-        var img =
-            'https://jojos-bizarre-api.netlify.app/assets/${_personagens?[index].image}';
-        var name = _personagens?[index].name ?? "Not found";
-        var chapters = _personagens?[index].chapter ?? const [];
+    return Scaffold(
+      appBar: MyAppBar(
+        changeObjects: _changeObjects,
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        itemCount: _personagens?.length ?? 0,
+        itemBuilder: (context, index) {
+          var img =
+              'https://jojos-bizarre-api.netlify.app/assets/${_personagens?[index].image}';
+          var name = _personagens?[index].name ?? "Not found";
+          var chapters = _personagens?[index].chapter ?? const [];
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 3),
-          child: ClickableCard(
-            nameTitle: name,
-            chapters: chapters,
-            imgUrl: img,
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => DetailsPage(
-                    personagem: _personagens?[index],
-                    jojoService: widget.jojoService,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: ClickableCard(
+              nameTitle: name,
+              chapters: chapters,
+              imgUrl: img,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DetailsPage(
+                      personagem: _personagens?[index],
+                      jojoService: widget.jojoService,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        );
-      },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

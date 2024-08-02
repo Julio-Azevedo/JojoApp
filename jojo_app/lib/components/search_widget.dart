@@ -1,1 +1,0 @@
-// widget do search delegate
