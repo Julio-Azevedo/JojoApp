@@ -18,17 +18,32 @@ class PersonagemWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Nome
-        Text(personagem.name,
-            style: const TextStyle(fontSize: 32, color: Colors.purple)),
+        Text(
+          personagem.name,
+          style: const TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Roboto',
+            color: Colors.black,
+          ),
+        ),
 
         const SizedBox(height: 5),
+
         // Nome em Japonês
-        Text(personagem.japaneseName,
-            style: const TextStyle(fontSize: 18, color: Colors.black)),
+        Text(
+          personagem.japaneseName,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Georgia',
+            color: Colors.blueGrey,
+          ),
+        ),
 
         const SizedBox(height: 5),
-        // Partes
 
+        // Partes
         Center(
           child: Wrap(
             alignment: WrapAlignment.center,
@@ -56,6 +71,7 @@ class PersonagemWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 32,
+              fontFamily: 'Courier New',
               fontStyle: FontStyle.italic,
             ),
           ),
@@ -66,12 +82,14 @@ class PersonagemWidget extends StatelessWidget {
         Expanded(
           child: GridView.count(
             crossAxisCount: 3,
-            children: personagem.family
-                .map(
-                  (familyMember) =>
-                      IconLink(familyMember, jojoService: jojoService),
-                )
-                .toList(),
+            children: personagem.family[0] != "none"
+                ? personagem.family
+                    .map(
+                      (familyMember) =>
+                          IconLink(familyMember, jojoService: jojoService),
+                    )
+                    .toList()
+                : const [],
           ),
         ),
       ],

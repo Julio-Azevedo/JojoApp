@@ -58,7 +58,9 @@ class _IconLinkState extends State<IconLink> {
       children: [
         IconButton(
           onPressed: _goToFamilyMember,
-          icon: ImageIcon(_imgIcon),
+          icon: _personagem != null
+              ? ImageIcon(_imgIcon)
+              : const Icon(Icons.no_accounts),
           iconSize: 60,
         ),
         Text(
@@ -66,7 +68,11 @@ class _IconLinkState extends State<IconLink> {
           textAlign: TextAlign.center,
           softWrap: true,
           overflow: TextOverflow.visible,
-          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+          style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Verdana',
+          ),
         ),
       ],
     );

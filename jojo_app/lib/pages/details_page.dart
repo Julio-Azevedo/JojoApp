@@ -97,7 +97,7 @@ class _DetailsPageState extends State<DetailsPage> {
       bottomNavItems.add(
         const BottomNavigationBarItem(
           icon: Icon(Icons.fingerprint),
-          label: "Personagem",
+          label: "Character",
         ),
       );
     } else {
@@ -118,7 +118,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: const Text('Lista de Personagens'),
+        title: const Text("Character's List"),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

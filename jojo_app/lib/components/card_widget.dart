@@ -112,6 +112,7 @@ class ClickableCard extends StatelessWidget {
                       const SizedBox(height: 10),
                       Wrap(
                         spacing: 5,
+                        runSpacing: 5,
                         children: chapters
                             .map(
                               (chapter) => Chip(
