@@ -5,6 +5,7 @@ class Stand {
   final String image;
   final String battleCry;
   final int standUser;
+  final List<String> abilities;
   final List<String> chapter;
 
   Stand({
@@ -14,6 +15,7 @@ class Stand {
     required this.image,
     required this.battleCry,
     required this.standUser,
+    required this.abilities,
     required this.chapter,
   });
 
@@ -25,6 +27,10 @@ class Stand {
       image: json['image'],
       battleCry: json['battlecry'],
       standUser: int.parse(json['standUser']),
+      abilities: (json['abilities'] as String)
+          .split(',')
+          .map((ability) => ability.trim())
+          .toList(),
       chapter: (json['chapter'] as String)
           .split(',')
           .map((chapter) => chapter.trim())

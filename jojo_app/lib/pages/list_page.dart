@@ -129,7 +129,7 @@ class _ListPageState extends State<ListPage> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => DetailsPage(
-                                    personagem: _characters?[index],
+                                    character: _characters?[index],
                                     jojoService: widget.jojoService,
                                   ),
                                 ),

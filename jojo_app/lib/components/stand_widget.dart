@@ -10,7 +10,6 @@ class StandWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Nome do Stand
         Text(stand.name,
@@ -55,11 +54,31 @@ class StandWidget extends StatelessWidget {
 
         // Grito de Batalha
         Center(
-          child: Text('"${stand.battleCry}"',
-              style: const TextStyle(
-                fontSize: 46,
-                fontStyle: FontStyle.italic,
-              )),
+          child: Text(
+            '"${stand.battleCry}"',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 38,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 15),
+
+        // Lista de Habilidades
+        const Center(child: Text("Abilities", style: TextStyle(fontSize: 18))),
+
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(4),
+            itemCount: stand.abilities.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: Text(stand.abilities[index]),
+              );
+            },
+          ),
         ),
       ],
     );

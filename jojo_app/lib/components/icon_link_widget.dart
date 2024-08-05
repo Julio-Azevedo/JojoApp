@@ -43,7 +43,7 @@ class _IconLinkState extends State<IconLink> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => DetailsPage(
-            personagem: _personagem,
+            character: _personagem,
             jojoService: widget.jojoService,
           ),
         ),

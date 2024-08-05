@@ -4,15 +4,15 @@ import 'package:jojo_app/models/personagem.dart';
 import 'package:jojo_app/models/stand.dart';
 import 'package:jojo_app/services/jojo_service.dart';
 
+enum selected { personagem, stand, standby }
+
 class DetailsPage extends StatefulWidget {
   final JoJoService jojoService;
-  final Personagem? personagem;
-  final Stand? stand;
+  final dynamic character;
 
   const DetailsPage({
     super.key,
-    this.personagem,
-    this.stand,
+    this.character,
     required this.jojoService,
   });
 
@@ -24,45 +24,32 @@ class _DetailsPageState extends State<DetailsPage> {
   Stand? _stand;
   Personagem? _personagem;
 
-  int _selectedIndex = 0;
+  selected _selectedCharacter = selected.standby;
   bool _isLoading = true;
 
   @override
   initState() {
     super.initState();
-    // Pegar argumentos de rota
-    Future.microtask(() {
-      final args = ModalRoute.of(context)?.settings.arguments;
-      if (args is Personagem) {
-        setState(() {
-          _personagem = args;
-        });
-      } else if (args is Stand) {
-        setState(() {
-          _stand = args;
-        });
-      } else {
-        _loadData();
-      }
-    });
+
+    _loadData();
   }
 
   void _loadData() async {
     // Inicia em Personagem
-    int newIndex = 0;
+    selected fetchedSelected = selected.standby;
 
     Personagem? fetchedPersonagem;
-    if (widget.personagem != null) {
-      fetchedPersonagem = widget.personagem;
+    if (widget.character is Personagem && widget.character != null) {
+      fetchedPersonagem = widget.character;
+      fetchedSelected = selected.personagem;
     } else {
       fetchedPersonagem = await _findUser();
     }
 
     Stand? fetchedStand;
-    if (widget.stand != null) {
-      // Se altera em Stand
-      newIndex = 1;
-      fetchedStand = widget.stand;
+    if (widget.character is Stand && widget.character != null) {
+      fetchedStand = widget.character;
+      fetchedSelected = selected.stand;
     } else {
       fetchedStand = await _findStand();
     }
@@ -70,13 +57,13 @@ class _DetailsPageState extends State<DetailsPage> {
     setState(() {
       _stand = fetchedStand;
       _personagem = fetchedPersonagem;
-      _selectedIndex = newIndex;
+      _selectedCharacter = fetchedSelected;
       _isLoading = false;
     });
   }
 
   Future<Stand?> _findStand() async {
-    var query = {'standUser': '${widget.personagem?.id}'};
+    var query = {'standUser': '${widget.character.id}'};
     // encontrando stands
     List<Stand> standVerify = await widget.jojoService.getStandByQuery(query);
     // retornando o stand ou nulo
@@ -85,7 +72,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Future<Personagem?> _findUser() async {
     // construindo uma query para encontrar o Usuário do stand
-    var id = widget.stand?.standUser;
+    var id = widget.character.standUser;
     // Encontrando o usuário
     Personagem? userVerify = await widget.jojoService.getPersonagem(id!);
     // Retornando o usuário
@@ -93,8 +80,11 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   void _onItemTapped(int index) {
+    selected selectedCharacter =
+        index == 0 ? selected.personagem : selected.stand;
+
     setState(() {
-      _selectedIndex = index;
+      _selectedCharacter = selectedCharacter;
     });
   }
 
@@ -132,9 +122,9 @@ class _DetailsPageState extends State<DetailsPage> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : CharacterWidget(
-              _selectedIndex,
-              personagem: _personagem,
-              stand: _stand,
+              character: _selectedCharacter == selected.personagem
+                  ? _personagem
+                  : _stand,
               jojoService: widget.jojoService,
             ),
       bottomNavigationBar: _isLoading
@@ -143,7 +133,8 @@ class _DetailsPageState extends State<DetailsPage> {
               ? null
               : BottomNavigationBar(
                   selectedItemColor: Colors.blue[600],
-                  currentIndex: _selectedIndex,
+                  currentIndex:
+                      _selectedCharacter == selected.personagem ? 0 : 1,
                   onTap: _onItemTapped,
                   items: bottomNavItems,
                 ),

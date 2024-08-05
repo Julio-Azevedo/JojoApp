@@ -49,11 +49,14 @@ class PersonagemWidget extends StatelessWidget {
         const SizedBox(height: 25),
         // Frase de Efeito
         Center(
-          child: Text('"${personagem.catchPhrase}"',
-              style: const TextStyle(
-                fontSize: 46,
-                fontStyle: FontStyle.italic,
-              )),
+          child: Text(
+            '"${personagem.catchPhrase}"',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 38,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
         ),
 
         const SizedBox(height: 15),
