@@ -74,24 +74,15 @@ class CharacterWidget extends StatelessWidget {
         // Informações do personagem
         Expanded(
           flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Colors.blue,
-                width: 3.0,
-              ),
-            ),
-            child: Center(
-              child: character is Personagem
-                  ? PersonagemWidget(
-                      character!,
-                      jojoService: jojoService,
-                    )
-                  : StandWidget(
-                      character!,
-                    ),
-            ),
+          child: Center(
+            child: character is Personagem
+                ? PersonagemWidget(
+                    character!,
+                    jojoService: jojoService,
+                  )
+                : StandWidget(
+                    character!,
+                  ),
           ),
         ),
       ],

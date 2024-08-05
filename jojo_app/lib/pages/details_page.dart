@@ -116,6 +116,7 @@ class _DetailsPageState extends State<DetailsPage> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: const Text('Lista de Personagens'),
       ),

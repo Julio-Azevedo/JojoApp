@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stroke_text/stroke_text.dart';
 
 class ClickableCard extends StatelessWidget {
   final String nameTitle;
@@ -38,14 +39,49 @@ class ClickableCard extends StatelessWidget {
     }
   }
 
+  // Para distinguir a cor do card
+  Color _identifyPartBorder(String chapter) {
+    switch (chapter) {
+      case 'Phantom Blood':
+        return Colors.orange;
+      case 'Battle Tendency':
+        return Colors.pink;
+      case 'Stardust Crusaders':
+        return Colors.blue;
+      case 'Diamond is Unbreakable':
+        return Colors.cyan;
+      case 'Vento Aureo':
+        return Colors.white;
+      case 'Stone Ocean':
+        return Colors.lime;
+      case 'Steel Ball Run':
+        return Colors.green;
+      case 'Jojolion':
+        return Colors.purple;
+      default:
+        return Colors.black;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 150,
       height: 125,
       child: Card(
+        shadowColor: Colors.black,
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: _identifyPartBorder(chapters[0]), // Cor da borda
+            width: 2.5, // Largura da borda
+          ),
+          borderRadius:
+              BorderRadius.circular(12.0), // Raio do arredondamento dos cantos
+        ),
         clipBehavior: Clip.hardEdge,
         child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
@@ -65,19 +101,21 @@ class ClickableCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        nameTitle,
-                        style: const TextStyle(
+                      StrokeText(
+                        text: nameTitle,
+                        textStyle: const TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Wrap(
-                        spacing: 4,
+                        spacing: 5,
                         children: chapters
                             .map(
                               (chapter) => Chip(
-                                label: Text('#$chapter'),
+                                label: Text(chapter),
                                 labelStyle: const TextStyle(fontSize: 11),
                                 labelPadding: const EdgeInsets.all(0),
                                 visualDensity: VisualDensity.compact,

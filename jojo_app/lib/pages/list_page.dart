@@ -109,6 +109,7 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: const MyAppBar(),
       drawer: const MyDrawer(),
       body: _characters == null

@@ -20,13 +20,15 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.purple),
-            child: Text(
-              'Navegação',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.grey[300]),
+            child: const Center(
+              child: Text(
+                'JoJo Wiki',
+                style: TextStyle(
+                  fontSize: 24,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
