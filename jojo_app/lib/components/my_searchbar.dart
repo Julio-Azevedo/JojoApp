@@ -1,14 +1,27 @@
-// widget do search delegate
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MySearchBar extends SearchDelegate<String> {
   final Function? changeObjects;
 
   MySearchBar({String hintText = "", this.changeObjects})
-      : super(searchFieldLabel: hintText);
+      : super(searchFieldLabel: hintText) {
+    loadSelectedCategory().then((category) {
+      selectedCategory = category ?? "name";
+    });
+  }
 
   String selectedCategory = "name";
+
+  Future<void> saveSelectedCategory(String category) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedCategory', category);
+  }
+
+  Future<String?> loadSelectedCategory() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('selectedCategory');
+  }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -42,6 +55,7 @@ class MySearchBar extends SearchDelegate<String> {
             .toList(),
         onChanged: (newValue) {
           selectedCategory = newValue!;
+          saveSelectedCategory(newValue);
         },
       ),
     ];
