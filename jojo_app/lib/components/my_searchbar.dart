@@ -71,13 +71,9 @@ class MySearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    Map<String, dynamic> queryList = {
-      selectedCategory: query,
-    };
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      changeObjects!(queryList);
-      Navigator.of(context).pop();
+      Navigator.pushReplacementNamed(context, '/searchresult',
+          arguments: {'category': selectedCategory, 'query': query});
     });
 
     return const Center(child: CircularProgressIndicator());

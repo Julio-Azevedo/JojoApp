@@ -31,18 +31,27 @@ class _ListPageState extends State<ListPage> {
     if (_characters == null) {
       // Obtém a rota
       final route = ModalRoute.of(context)!.settings.name;
-      // Obtém o argumento
-      final argument = ModalRoute.of(context)!.settings.arguments;
+
       // Muda a rota do objeto
       _route = route;
-      // Verifica se há argumento
-      if (argument != null) {
-        Map<String, dynamic> newQuery = {
-          'chapter': argument,
-        };
 
-        _changeObjects(newQuery);
+      // Obtém o argumento e verifica se é um Map
+      final arguments = ModalRoute.of(context)!.settings.arguments;
+      if (arguments != null && arguments is Map<String, dynamic>) {
+        final Map<String, dynamic> argument = arguments;
+
+        // Verifica se há argumento
+        if (argument.isNotEmpty) {
+          Map<String, dynamic> newQuery = {
+            argument['category']: argument['query'],
+          };
+
+          _changeObjects(newQuery);
+        } else {
+          _fetchObjets();
+        }
       } else {
+        // Caso os argumentos não sejam válidos ou sejam nulos
         _fetchObjets();
       }
     }
@@ -79,6 +88,8 @@ class _ListPageState extends State<ListPage> {
         characters = await widget.jojoService.getPersonagemByQuery(query);
       } else if (_route == "/stands") {
         characters = await widget.jojoService.getStandByQuery(query);
+      } else if (_route == "/searchresult") {
+        characters = await widget.jojoService.getPersonagemByQuery(query);
       } else {
         characters = const [];
       }

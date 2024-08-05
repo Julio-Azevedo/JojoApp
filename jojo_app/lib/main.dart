@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/personagens': (context) => ListPage(jojoService: service),
         '/stands': (context) => ListPage(jojoService: service),
+        '/searchresult': (context) => ListPage(jojoService: service),
         '/details': (context) => DetailsPage(jojoService: service),
       },
     );

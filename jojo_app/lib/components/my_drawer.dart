@@ -54,8 +54,14 @@ class MyDrawer extends StatelessWidget {
                     (chapter) => ListTile(
                       title: Text(chapter),
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, '/personagens',
-                            arguments: chapter);
+                        Navigator.pushReplacementNamed(
+                          context,
+                          '/personagens',
+                          arguments: {
+                            'category': 'chapter',
+                            'query': chapter,
+                          },
+                        );
                       },
                     ),
                   )
@@ -77,8 +83,14 @@ class MyDrawer extends StatelessWidget {
                     (chapter) => ListTile(
                       title: Text(chapter),
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, '/stands',
-                            arguments: chapter);
+                        Navigator.pushReplacementNamed(
+                          context,
+                          '/stands',
+                          arguments: {
+                            'category': 'chapter',
+                            'query': chapter,
+                          },
+                        );
                       },
                     ),
                   )
