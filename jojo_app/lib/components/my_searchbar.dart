@@ -2,22 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MySearchBar extends SearchDelegate<String> {
-  final Function? changeObjects;
-
-  MySearchBar({String hintText = "", this.changeObjects})
-      : super(searchFieldLabel: hintText) {
+  MySearchBar({String hintText = ""}) : super(searchFieldLabel: hintText) {
     loadSelectedCategory().then((category) {
       selectedCategory = category ?? "name";
     });
   }
 
+  // Distinção de categorias
+  List<String> personagemCategories = [
+    "name",
+    "nationality",
+    "family",
+  ];
+
+  List<String> standCategories = [
+    "stand",
+    "alternateName",
+  ];
+
+  // Categoria selecionada no início da aplicação
   String selectedCategory = "name";
 
+  // SharedPreferences para salvar a última pesquisa
   Future<void> saveSelectedCategory(String category) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedCategory', category);
   }
 
+  // SharedPreferences para atualizar a última pesquisa
   Future<String?> loadSelectedCategory() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('selectedCategory');
@@ -26,10 +38,8 @@ class MySearchBar extends SearchDelegate<String> {
   @override
   List<Widget>? buildActions(BuildContext context) {
     List<String> categories = [
-      "name",
-      "nationality",
-      "family",
-      "chapter",
+      ...personagemCategories,
+      ...standCategories,
     ];
 
     return [
@@ -71,9 +81,29 @@ class MySearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
+    String? type;
+
+    // Verificar se a "query" é de Personagem
+    if (personagemCategories.contains(selectedCategory)) {
+      type = "personagem";
+    }
+
+    // Verificar se a "query" é de Stand
+    if (standCategories.contains(selectedCategory)) {
+      // em Categorias, "stand" é para ser o nome do Stand.
+      if (selectedCategory == "stand") {
+        selectedCategory = "name";
+      }
+
+      type = "stand";
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacementNamed(context, '/searchresult',
-          arguments: {'category': selectedCategory, 'query': query});
+      Navigator.pushReplacementNamed(context, '/searchresult', arguments: {
+        'category': selectedCategory,
+        'query': query,
+        'type': type,
+      });
     });
 
     return const Center(child: CircularProgressIndicator());

@@ -46,7 +46,7 @@ class _ListPageState extends State<ListPage> {
             argument['category']: argument['query'],
           };
 
-          _changeObjects(newQuery);
+          _changeObjects(newQuery, argument['type']);
         } else {
           _fetchObjets();
         }
@@ -81,15 +81,16 @@ class _ListPageState extends State<ListPage> {
     }
   }
 
-  void _changeObjects(Map<String, dynamic> query) async {
+  void _changeObjects(Map<String, dynamic> query, String? type) async {
     try {
       List<dynamic> characters;
-      if (_route == "/personagens") {
+
+      if (_route == "/personagens" ||
+          (_route == "/searchresult" && type == "personagem")) {
         characters = await widget.jojoService.getPersonagemByQuery(query);
-      } else if (_route == "/stands") {
+      } else if (_route == "/stands" ||
+          (_route == "/searchresult" && type == "stand")) {
         characters = await widget.jojoService.getStandByQuery(query);
-      } else if (_route == "/searchresult") {
-        characters = await widget.jojoService.getPersonagemByQuery(query);
       } else {
         characters = const [];
       }
@@ -108,9 +109,7 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        changeObjects: _changeObjects,
-      ),
+      appBar: const MyAppBar(),
       drawer: const MyDrawer(),
       body: _characters == null
           ? const Center(child: CircularProgressIndicator())
