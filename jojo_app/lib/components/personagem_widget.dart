@@ -48,23 +48,20 @@ class PersonagemWidget extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
         // Frase de Efeito
         Center(
           child: Text(
             '"${personagem.catchPhrase}"',
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 38,
+              fontSize: 32,
               fontStyle: FontStyle.italic,
             ),
           ),
         ),
 
-        const SizedBox(height: 15),
         // Família (Link para segui-los)
-        const Center(
-            child: Text("Family Members", style: TextStyle(fontSize: 18))),
 
         Expanded(
           child: GridView.count(

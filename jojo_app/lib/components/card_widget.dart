@@ -18,13 +18,21 @@ class ClickableCard extends StatelessWidget {
   String _identifyPartImage(String chapter) {
     switch (chapter) {
       case 'Phantom Blood':
+        return 'assets/part1_cover.png';
       case 'Battle Tendency':
+        return 'assets/part2_cover.png';
       case 'Stardust Crusaders':
+        return 'assets/part3_cover.png';
       case 'Diamond is Unbreakable':
+        return 'assets/part4_cover.png';
       case 'Vento Aureo':
+        return 'assets/part5_cover.png';
       case 'Stone Ocean':
+        return 'assets/part6_cover.png';
       case 'Steel Ball Run':
+        return 'assets/part7_cover.png';
       case 'Jojolion':
+        return 'assets/part8_cover.png';
       default:
         return 'assets/dummy.png';
     }
