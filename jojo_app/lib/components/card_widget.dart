@@ -34,7 +34,7 @@ class ClickableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 150,
-      height: 100,
+      height: 125,
       child: Card(
         clipBehavior: Clip.hardEdge,
         child: Container(

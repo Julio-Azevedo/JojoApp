@@ -20,6 +20,15 @@ class MySearchBar extends SearchDelegate<String> {
     "alternateName",
   ];
 
+  // Nomes para as categorias
+  Map<String, String> categoryName = {
+    "name": "Name",
+    "nationality": "Nationality",
+    "family": "Family Member",
+    "stand": "Stand Name",
+    "alternateName": "Alternative Stand Name",
+  };
+
   // Categoria selecionada no início da aplicação
   String selectedCategory = "name";
 
@@ -59,7 +68,7 @@ class MySearchBar extends SearchDelegate<String> {
             .map(
               (category) => DropdownMenuItem<String>(
                 value: category,
-                child: Text(category),
+                child: Text(categoryName[category]!),
               ),
             )
             .toList(),

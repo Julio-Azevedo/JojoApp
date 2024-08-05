@@ -29,21 +29,23 @@ class PersonagemWidget extends StatelessWidget {
         const SizedBox(height: 5),
         // Partes
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: personagem.chapter
-              .map(
-                (chapter) => Padding(
-                  padding: const EdgeInsets.only(right: 4.0),
-                  child: Chip(
-                    label: Text(chapter),
-                    labelStyle: const TextStyle(fontSize: 11),
-                    labelPadding: const EdgeInsets.all(1),
-                    visualDensity: VisualDensity.compact,
+        Center(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            children: personagem.chapter
+                .map(
+                  (chapter) => Padding(
+                    padding: const EdgeInsets.only(right: 4.0),
+                    child: Chip(
+                      label: Text(chapter),
+                      labelStyle: const TextStyle(fontSize: 11),
+                      labelPadding: const EdgeInsets.all(1),
+                      visualDensity: VisualDensity.compact,
+                    ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
+          ),
         ),
 
         const SizedBox(height: 25),
