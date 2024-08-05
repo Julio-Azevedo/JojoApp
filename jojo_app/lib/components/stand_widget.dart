@@ -12,28 +12,43 @@ class StandWidget extends StatelessWidget {
     return Column(
       children: [
         // Nome do Stand
-        Text(stand.name,
-            style: TextStyle(
-              fontSize: 32,
-              color: Colors.amber[400],
-            )),
+        Text(
+          stand.name,
+          style: const TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Roboto',
+            color: Colors.black,
+          ),
+        ),
 
-        const SizedBox(height: 10),
         // Nome Alternativo
         stand.alternateName != "none"
-            ? Text(stand.alternateName,
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.amber[800],
-                    fontStyle: FontStyle.italic))
+            ? Text(
+                stand.alternateName,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Georgia',
+                  color: Colors.deepPurple,
+                ),
+              )
             : Container(),
 
         const SizedBox(height: 5),
         // Nome em Japonês
-        Text(stand.japaneseName,
-            style: const TextStyle(fontSize: 18, color: Colors.black)),
+        Text(
+          stand.japaneseName,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Georgia',
+            color: Colors.blueGrey,
+          ),
+        ),
 
         const SizedBox(height: 15),
+
         // Partes
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,13 +73,14 @@ class StandWidget extends StatelessWidget {
             '"${stand.battleCry}"',
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 38,
+              fontSize: 32,
+              fontFamily: 'Courier New',
               fontStyle: FontStyle.italic,
             ),
           ),
         ),
 
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
 
         // Lista de Habilidades
         const Center(child: Text("Abilities", style: TextStyle(fontSize: 18))),
@@ -74,8 +90,26 @@ class StandWidget extends StatelessWidget {
             padding: const EdgeInsets.all(4),
             itemCount: stand.abilities.length,
             itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: Text(stand.abilities[index]),
+              return SizedBox(
+                height: 35,
+                child: Card(
+                  child: Center(
+                    child: Row(
+                      children: [
+                        const Icon(Icons.settings),
+                        Text(
+                          ' ${stand.abilities[index]}',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Courier New',
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               );
             },
           ),
