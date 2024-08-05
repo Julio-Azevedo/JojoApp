@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jojo_app/components/my_searchbar.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Function changeObjects;
-  const MyAppBar({super.key, required this.changeObjects});
+  final Function? changeObjects;
+  const MyAppBar({super.key, this.changeObjects});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -12,10 +12,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text("JoJo Wiki"),
-      leading: IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: () {},
-      ),
       actions: [
         // Search Button
         Builder(
@@ -26,7 +22,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 context: context,
                 delegate: MySearchBar(
                   hintText: "Procure por um personagem",
-                  changeObjects: changeObjects,
+                  changeObjects: changeObjects!,
                 ),
               );
             },

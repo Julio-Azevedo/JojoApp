@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+
+class MyDrawer extends StatelessWidget {
+  const MyDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> chapters = [
+      'Phantom Blood',
+      'Battle Tendency',
+      'Stardust Crusaders',
+      'Diamond is Unbreakable',
+      'Vento Aureo',
+      'Stone Ocean',
+      'Steel Ball Run',
+      'Jojolion',
+    ];
+
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(color: Colors.purple),
+            child: Text(
+              'Navegação',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+
+          // ROTAS DO APLICATIVO
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Página de Entrada'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+          ),
+          ExpansionTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Personagens'),
+            children: [
+              ListTile(
+                title: const Text("Todos"),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/personagens');
+                },
+              ),
+              ...chapters
+                  .map(
+                    (chapter) => ListTile(
+                      title: Text(chapter),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/personagens',
+                            arguments: chapter);
+                      },
+                    ),
+                  )
+                  .toList(),
+            ],
+          ),
+          ExpansionTile(
+            leading: const Icon(Icons.psychology),
+            title: const Text('Stands'),
+            children: [
+              ListTile(
+                title: const Text("Todos"),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/stands');
+                },
+              ),
+              ...chapters
+                  .map(
+                    (chapter) => ListTile(
+                      title: Text(chapter),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/stands',
+                            arguments: chapter);
+                      },
+                    ),
+                  )
+                  .toList(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

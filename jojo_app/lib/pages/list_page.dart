@@ -1,16 +1,12 @@
-// Página com a Lista de Personagens/Stands e Filtro
-
 // packages
 import 'package:flutter/material.dart';
-import 'package:jojo_app/components/card_widget.dart';
-import 'package:jojo_app/components/my_appbar.dart';
-
 // models
-import 'package:jojo_app/models/personagem.dart';
 import 'package:jojo_app/pages/details_page.dart';
-
 //services
 import 'package:jojo_app/services/jojo_service.dart';
+// components
+import 'package:jojo_app/components/card_widget.dart';
+import 'package:jojo_app/components/my_appbar.dart';
 
 class ListPage extends StatefulWidget {
   final JoJoService jojoService;
@@ -23,24 +19,37 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  List<Personagem>? _personagens;
+  List<dynamic>? _characters;
+  String? route;
 
   @override
-  void initState() {
-    super.initState();
-
-    // atualizando lista inicial
-    _fetchObjects();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Obtém o argumento da rota
+    final arguments = ModalRoute.of(context)!.settings.name;
+    if (arguments != null) {
+      setState(() {
+        route = arguments;
+      });
+    }
+    _fetchObjets();
   }
 
-  void _fetchObjects() async {
-    // atualizar personagens e stands
+  void _fetchObjets() async {
     try {
-      // criando lista de personagens
-      final personagens = await widget.jojoService.getAllPersonagens();
+      final List<dynamic>? characters;
+      if (route == "/personagens") {
+        // criando lista de personagens
+        characters = await widget.jojoService.getAllPersonagens();
+      } else if (route == "/stands") {
+        // criando lista de stands
+        characters = await widget.jojoService.getAllStands();
+      } else {
+        characters = const [];
+      }
       // alterando estado
       setState(() {
-        _personagens = personagens;
+        _characters = characters;
       });
     } catch (e) {
       throw Exception('Um erro aconteceu: ${e.toString()}');
@@ -48,11 +57,17 @@ class _ListPageState extends State<ListPage> {
   }
 
   void _changeObjects(Map<String, dynamic> query) async {
-    List<Personagem> personagens =
-        await widget.jojoService.getPersonagemByQuery(query);
+    List<dynamic> characters;
+    if (route == "/personagens") {
+      characters = await widget.jojoService.getPersonagemByQuery(query);
+    } else if (route == "/stands") {
+      characters = await widget.jojoService.getStandByQuery(query);
+    } else {
+      characters = const [];
+    }
 
     setState(() {
-      _personagens = personagens;
+      _characters = characters;
     });
   }
 
@@ -64,12 +79,12 @@ class _ListPageState extends State<ListPage> {
       ),
       body: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        itemCount: _personagens?.length ?? 0,
+        itemCount: _characters?.length ?? 0,
         itemBuilder: (context, index) {
           var img =
-              'https://jojos-bizarre-api.netlify.app/assets/${_personagens?[index].image}';
-          var name = _personagens?[index].name ?? "Not found";
-          var chapters = _personagens?[index].chapter ?? const [];
+              'https://jojos-bizarre-api.netlify.app/assets/${_characters?[index].image}';
+          var name = _characters?[index].name ?? "Not found";
+          var chapters = _characters?[index].chapter ?? const [];
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
@@ -81,7 +96,7 @@ class _ListPageState extends State<ListPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => DetailsPage(
-                      personagem: _personagens?[index],
+                      personagem: _characters?[index],
                       jojoService: widget.jojoService,
                     ),
                   ),

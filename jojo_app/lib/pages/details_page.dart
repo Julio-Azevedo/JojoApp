@@ -30,7 +30,21 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   initState() {
     super.initState();
-    _loadData();
+    // Pegar argumentos de rota
+    Future.microtask(() {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args is Personagem) {
+        setState(() {
+          _personagem = args;
+        });
+      } else if (args is Stand) {
+        setState(() {
+          _stand = args;
+        });
+      } else {
+        _loadData();
+      }
+    });
   }
 
   void _loadData() async {

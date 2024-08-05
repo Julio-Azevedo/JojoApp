@@ -1,8 +1,10 @@
 // packages
 import 'package:flutter/material.dart';
-// models
-import 'package:jojo_app/pages/list_page.dart';
 // pages
+import 'package:jojo_app/pages/home_page.dart';
+import 'package:jojo_app/pages/list_page.dart';
+import 'package:jojo_app/pages/details_page.dart';
+// services
 import 'package:jojo_app/services/jojo_service.dart';
 
 void main() {
@@ -19,14 +21,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BizarreApp',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ListPage(jojoService: service),
-      //JojoRoute(repository: JojoRepository(dio: Dio())),
-      /*HomeContainer(
-        repository: JojoRepository(dio: Dio()),
-        ),*/
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const HomePage(),
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/personagens': (context) => ListPage(jojoService: service),
+        '/stands': (context) => ListPage(jojoService: service),
+        '/details': (context) => DetailsPage(jojoService: service),
+      },
     );
   }
 }

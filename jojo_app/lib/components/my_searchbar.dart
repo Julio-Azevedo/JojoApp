@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 
 class MySearchBar extends SearchDelegate<String> {
-  final Function changeObjects;
+  final Function? changeObjects;
 
-  MySearchBar({String hintText = "", required this.changeObjects})
+  MySearchBar({String hintText = "", this.changeObjects})
       : super(searchFieldLabel: hintText);
 
   String selectedCategory = "name";
@@ -62,7 +62,7 @@ class MySearchBar extends SearchDelegate<String> {
     };
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      changeObjects(queryList);
+      changeObjects!(queryList);
       Navigator.of(context).pop();
     });
 
