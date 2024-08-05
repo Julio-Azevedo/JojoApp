@@ -1,5 +1,6 @@
 // packages
 import 'package:flutter/material.dart';
+import 'package:jojo_app/components/my_drawer.dart';
 // models
 import 'package:jojo_app/pages/details_page.dart';
 //services
@@ -20,55 +21,77 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   List<dynamic>? _characters;
-  String? route;
+  String? _route;
+  bool _isLoading = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Obtém o argumento da rota
-    final arguments = ModalRoute.of(context)!.settings.name;
-    if (arguments != null) {
-      setState(() {
-        route = arguments;
-      });
+
+    if (_characters == null) {
+      // Obtém a rota
+      final route = ModalRoute.of(context)!.settings.name;
+      // Obtém o argumento
+      final argument = ModalRoute.of(context)!.settings.arguments;
+      // Muda a rota do objeto
+      _route = route;
+      // Verifica se há argumento
+      if (argument != null) {
+        Map<String, dynamic> newQuery = {
+          'chapter': argument,
+        };
+
+        _changeObjects(newQuery);
+      } else {
+        _fetchObjets();
+      }
     }
-    _fetchObjets();
   }
 
   void _fetchObjets() async {
     try {
       final List<dynamic>? characters;
-      if (route == "/personagens") {
+      if (_route == "/personagens") {
         // criando lista de personagens
         characters = await widget.jojoService.getAllPersonagens();
-      } else if (route == "/stands") {
+      } else if (_route == "/stands") {
         // criando lista de stands
         characters = await widget.jojoService.getAllStands();
       } else {
         characters = const [];
       }
       // alterando estado
-      setState(() {
-        _characters = characters;
-      });
+      if (mounted) {
+        setState(() {
+          _characters = characters;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
       throw Exception('Um erro aconteceu: ${e.toString()}');
     }
   }
 
   void _changeObjects(Map<String, dynamic> query) async {
-    List<dynamic> characters;
-    if (route == "/personagens") {
-      characters = await widget.jojoService.getPersonagemByQuery(query);
-    } else if (route == "/stands") {
-      characters = await widget.jojoService.getStandByQuery(query);
-    } else {
-      characters = const [];
-    }
+    try {
+      List<dynamic> characters;
+      if (_route == "/personagens") {
+        characters = await widget.jojoService.getPersonagemByQuery(query);
+      } else if (_route == "/stands") {
+        characters = await widget.jojoService.getStandByQuery(query);
+      } else {
+        characters = const [];
+      }
 
-    setState(() {
-      _characters = characters;
-    });
+      if (mounted) {
+        setState(() {
+          _characters = characters;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      throw Exception('Um erro aconteceu: ${e.toString()}');
+    }
   }
 
   @override
@@ -77,35 +100,45 @@ class _ListPageState extends State<ListPage> {
       appBar: MyAppBar(
         changeObjects: _changeObjects,
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        itemCount: _characters?.length ?? 0,
-        itemBuilder: (context, index) {
-          var img =
-              'https://jojos-bizarre-api.netlify.app/assets/${_characters?[index].image}';
-          var name = _characters?[index].name ?? "Not found";
-          var chapters = _characters?[index].chapter ?? const [];
+      drawer: const MyDrawer(),
+      body: _characters == null
+          ? const Center(child: CircularProgressIndicator())
+          : _characters!.isEmpty
+              ? const Center(
+                  child: Text(
+                      "Não foram encontrados personagens para essa especificação. "),
+                )
+              : _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      itemCount: _characters?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        var img =
+                            'https://jojos-bizarre-api.netlify.app/assets/${_characters?[index].image}';
+                        var name = _characters?[index].name ?? "Not found";
+                        var chapters = _characters?[index].chapter ?? const [];
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            child: ClickableCard(
-              nameTitle: name,
-              chapters: chapters,
-              imgUrl: img,
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DetailsPage(
-                      personagem: _characters?[index],
-                      jojoService: widget.jojoService,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child: ClickableCard(
+                            nameTitle: name,
+                            chapters: chapters,
+                            imgUrl: img,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => DetailsPage(
+                                    personagem: _characters?[index],
+                                    jojoService: widget.jojoService,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                );
-              },
-            ),
-          );
-        },
-      ),
     );
   }
 }

@@ -66,11 +66,11 @@ class MySearchBar extends SearchDelegate<String> {
       Navigator.of(context).pop();
     });
 
-    return const CircularProgressIndicator();
+    return const Center(child: CircularProgressIndicator());
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return const CircularProgressIndicator();
+    return const Center(child: CircularProgressIndicator());
   }
 }
