@@ -25,8 +25,8 @@ class MySearchBar extends SearchDelegate<String> {
     "name": "Name",
     "nationality": "Nationality",
     "family": "Family Member",
-    "stand": "Stand Name",
-    "alternateName": "Alternative Stand Name",
+    "stand": "Stand",
+    "alternateName": "Alt. Stand",
   };
 
   // Categoria selecionada no início da aplicação

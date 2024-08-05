@@ -36,17 +36,17 @@ class MyDrawer extends StatelessWidget {
           // ROTAS DO APLICATIVO
           ListTile(
             leading: const Icon(Icons.home),
-            title: const Text('Página de Entrada'),
+            title: const Text('Home Page'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/home');
             },
           ),
           ExpansionTile(
             leading: const Icon(Icons.person),
-            title: const Text('Personagens'),
+            title: const Text("Characters"),
             children: [
               ListTile(
-                title: const Text("Todos"),
+                title: const Text("All"),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, '/personagens');
                 },
@@ -75,7 +75,7 @@ class MyDrawer extends StatelessWidget {
             title: const Text('Stands'),
             children: [
               ListTile(
-                title: const Text("Todos"),
+                title: const Text("All"),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, '/stands');
                 },

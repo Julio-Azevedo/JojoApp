@@ -20,7 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               await showSearch(
                 context: context,
                 delegate: MySearchBar(
-                  hintText: "Procure por um personagem",
+                  hintText: "Search for a Character/Stand",
                 ),
               );
             },

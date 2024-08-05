@@ -77,7 +77,7 @@ class _ListPageState extends State<ListPage> {
         });
       }
     } catch (e) {
-      throw Exception('Um erro aconteceu: ${e.toString()}');
+      throw Exception('An error has occurred: ${e.toString()}');
     }
   }
 
@@ -102,7 +102,7 @@ class _ListPageState extends State<ListPage> {
         });
       }
     } catch (e) {
-      throw Exception('Um erro aconteceu: ${e.toString()}');
+      throw Exception('An error has occurred: ${e.toString()}');
     }
   }
 
@@ -117,7 +117,7 @@ class _ListPageState extends State<ListPage> {
           : _characters!.isEmpty
               ? const Center(
                   child: Text(
-                      "Não foram encontrados personagens para essa especificação. "),
+                      "Couldn't find any character with these especifications. "),
                 )
               : _isLoading
                   ? const Center(child: CircularProgressIndicator())

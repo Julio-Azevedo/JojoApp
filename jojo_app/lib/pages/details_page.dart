@@ -118,7 +118,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: const Text("Character's List"),
+        title: const Text("Character's Page"),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
