@@ -18,6 +18,7 @@ class MySearchBar extends SearchDelegate<String> {
   List<String> standCategories = [
     "stand",
     "alternateName",
+    "abilities",
   ];
 
   // Nomes para as categorias
@@ -27,6 +28,7 @@ class MySearchBar extends SearchDelegate<String> {
     "family": "Family Member",
     "stand": "Stand",
     "alternateName": "Alt. Stand",
+    "abilities": "Ability",
   };
 
   // Categoria selecionada no início da aplicação
