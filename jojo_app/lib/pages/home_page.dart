@@ -60,38 +60,45 @@ class HomePage extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/personagens');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple, // Cor do botão
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 32,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/personagens');
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.purple, // Cor do botão
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 32,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                            child: const Text("Personagens",
+                                style: TextStyle(color: Colors.white)),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
+                          const SizedBox(width: 8),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/stands');
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent, // Cor do botão
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 32,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                            child: const Text("Stands",
+                                style: TextStyle(color: Colors.white)),
                           ),
-                        ),
-                        child: const Text("Personagens"),
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/stands');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent, // Cor do botão
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 32,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                        ),
-                        child: const Text("Stands"),
+                        ],
                       ),
                       const SizedBox(height: 32),
                     ],

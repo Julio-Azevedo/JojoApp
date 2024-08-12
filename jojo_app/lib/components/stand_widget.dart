@@ -69,15 +69,17 @@ class StandWidget extends StatelessWidget {
 
         // Grito de Batalha
         Center(
-          child: Text(
-            '"${stand.battleCry}"',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 32,
-              fontFamily: 'Courier New',
-              fontStyle: FontStyle.italic,
-            ),
-          ),
+          child: stand.battleCry != "none"
+              ? Text(
+                  '"${stand.battleCry}"',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontFamily: 'Courier New',
+                    fontStyle: FontStyle.italic,
+                  ),
+                )
+              : null,
         ),
 
         const SizedBox(height: 10),

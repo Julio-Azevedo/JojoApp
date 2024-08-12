@@ -66,15 +66,17 @@ class PersonagemWidget extends StatelessWidget {
         const SizedBox(height: 15),
         // Frase de Efeito
         Center(
-          child: Text(
-            '"${personagem.catchPhrase}"',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 32,
-              fontFamily: 'Courier New',
-              fontStyle: FontStyle.italic,
-            ),
-          ),
+          child: personagem.catchPhrase != "none"
+              ? Text(
+                  '"${personagem.catchPhrase}"',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontFamily: 'Courier New',
+                    fontStyle: FontStyle.italic,
+                  ),
+                )
+              : null,
         ),
 
         // Família (Link para segui-los)

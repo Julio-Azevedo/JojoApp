@@ -16,7 +16,18 @@ class CharacterWidget extends StatelessWidget {
   Image _selectImage() {
     if (character != null) {
       return Image.network(
-          'https://jojos-bizarre-api.netlify.app/assets/${character!.image}');
+        'https://jojos-bizarre-api.netlify.app/assets/${character!.image}',
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      );
     } else {
       return Image.asset('assets/dummy.png', fit: BoxFit.fitHeight);
     }
